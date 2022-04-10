@@ -1,6 +1,7 @@
 package com.philvigus.sportsapi.imports.importers.england.teamnames;
 
 import com.philvigus.sportsapi.SportsApiApplication;
+import com.philvigus.sportsapi.imports.services.TeamImporterService;
 import com.philvigus.sportsapi.imports.services.TextFileImporterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -14,10 +15,12 @@ import java.util.List;
 @ComponentScan(basePackages = {"com.philvigus.*"})
 @Slf4j
 public class TeamNameImporter implements CommandLineRunner {
-  private TextFileImporterService textFileImporterService;
+  private final TextFileImporterService textFileImporterService;
+  private final TeamImporterService teamImporterService;
 
-  public TeamNameImporter(TextFileImporterService textFileImporterService) {
+  public TeamNameImporter(TextFileImporterService textFileImporterService, TeamImporterService teamImporterService) {
     this.textFileImporterService = textFileImporterService;
+    this.teamImporterService = teamImporterService;
   }
 
   public static void main(final String[] args) {
@@ -27,10 +30,8 @@ public class TeamNameImporter implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     List<String> data = textFileImporterService.importFile("data/rsss/england/divisional-movements.txt");
-    importTeams(data);
+
+    teamImporterService.importTeams(data);
   }
 
-  private void importTeams(List<String> data) {
-    System.out.println("test");
-  }
 }
