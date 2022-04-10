@@ -22,7 +22,7 @@ class TextFileImporterServiceImplTest {
   @Test
   @DisplayName("It imports a text file as a list of lines of text")
   void itImportsATextFileAsAListOfLinesOfText() throws IOException {
-    List<String> data = textFileImporterService.importFile("data/rsss/england/divisional-movements.txt");
+    final List<String> data = textFileImporterService.importFile("data/rsss/england/divisional-movements.txt");
 
     assertEquals("The first line of the imported text file is incorrect", "Aberdare Athletic (1921-27)", data.get(0));
     assertEquals("The second line of the imported text file is incorrect", "6   III  6   [6]   1921-27s", data.get(1));
