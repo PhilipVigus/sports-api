@@ -18,7 +18,7 @@ public class TeamNameImporter implements CommandLineRunner {
   private final TextFileImporterService textFileImporterService;
   private final TeamImporterService teamImporterService;
 
-  public TeamNameImporter(TextFileImporterService textFileImporterService, TeamImporterService teamImporterService) {
+  public TeamNameImporter(final TextFileImporterService textFileImporterService, final TeamImporterService teamImporterService) {
     this.textFileImporterService = textFileImporterService;
     this.teamImporterService = teamImporterService;
   }
@@ -28,8 +28,8 @@ public class TeamNameImporter implements CommandLineRunner {
   }
 
   @Override
-  public void run(String... args) throws Exception {
-    List<String> data = textFileImporterService.importFile("data/rsss/england/divisional-movements.txt");
+  public void run(final String... args) throws Exception {
+    final List<String> data = textFileImporterService.importFile("data/rsss/england/divisional-movements.txt");
 
     teamImporterService.importTeams(data);
   }
