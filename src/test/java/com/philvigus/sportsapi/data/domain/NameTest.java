@@ -20,7 +20,7 @@ class NameTest {
   @Test
   @DisplayName("setName should set the name field")
   void setNameShouldSetTheNameField() {
-    String name = "test name";
+    final String name = "test name";
 
     this.name.setName(name);
 
@@ -30,7 +30,7 @@ class NameTest {
   @Test
   @DisplayName("setUsedFrom should set the usedFrom field")
   void setUsedFromShouldSetTheUsedFromField() {
-    Date date = new Date(System.currentTimeMillis());
+    final Date date = new Date(System.currentTimeMillis());
 
     name.setUsedFrom(date);
 
@@ -40,7 +40,7 @@ class NameTest {
   @Test
   @DisplayName("setUsedTo should set the usedTo field")
   void setUsedToShouldSetTheUsedToField() {
-    Date date = new Date(System.currentTimeMillis());
+    final Date date = new Date(System.currentTimeMillis());
 
     name.setUsedTo(date);
 
@@ -50,7 +50,7 @@ class NameTest {
   @Test
   @DisplayName("setNotes should set the notes field")
   void setNotesShouldSetTheNotesField() {
-    String notes = "test notes";
+    final String notes = "test notes";
 
     name.setNotes(notes);
 

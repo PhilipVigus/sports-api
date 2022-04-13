@@ -19,7 +19,7 @@ class TeamTest {
   @Test
   @DisplayName("setName should set the name field")
   void setNameShouldSetTheNameField() {
-    String name = "test name";
+    final String name = "test name";
 
     team.setName(name);
 
