@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 
-@DisplayName("Team Test")
+@DisplayName("Team Domain Test")
 class TeamTest {
   Team team;
 
@@ -17,10 +17,12 @@ class TeamTest {
   }
 
   @Test
-  @DisplayName("You can set the name")
-  void youCanSetTheName() {
-    team.setName("test name");
+  @DisplayName("setName should set the name field")
+  void setNameShouldSetTheNameField() {
+    final String name = "test name";
 
-    assertEquals("The team name was not set", "test name", team.getName());
+    team.setName(name);
+
+    assertEquals("The name field was not set", name, team.getName());
   }
 }

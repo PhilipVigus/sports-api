@@ -34,4 +34,12 @@ class TeamServiceImplTest {
 
     verify(teamRepository, times(1)).save(team);
   }
+
+  @Test
+  @DisplayName("findAll calls findAll on the services repository")
+  void findAllCallsRepositoryFindAll() {
+    teamService.findAll();
+
+    verify(teamRepository, times(1)).findAll();
+  }
 }
