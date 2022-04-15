@@ -4,8 +4,6 @@ import com.philvigus.sportsapi.data.domain.Team;
 
 import java.util.List;
 
-public interface TeamService {
-  Team save(Team team);
-
+public interface TeamService extends EntitySaver<Team> {
   List<Team> findAll();
 }
