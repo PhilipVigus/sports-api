@@ -1,6 +1,7 @@
 package com.philvigus.sportsapi.api.controllers;
 
 import com.philvigus.sportsapi.data.domain.Team;
+import com.philvigus.sportsapi.data.factories.TeamFactory;
 import com.philvigus.sportsapi.data.services.TeamService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,29 +20,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 class TeamsControllerIntegrationTest {
-  @Autowired
-  TeamService teamService;
+  TeamFactory teamFactory;
 
-  @Autowired
-  MockMvc mockMvc;
+  @Autowired TeamService teamService;
+
+  @Autowired MockMvc mockMvc;
 
   @Test
   @DisplayName("When the GET /teams is hit it returns all teams")
   void whenGetTeamsThenReturnsAllTeams() throws Exception {
-    final Team team1 = new Team();
+    teamFactory = new TeamFactory(teamService);
 
-    team1.setName("test team 1");
-    teamService.save(team1);
+    final Team team1 = teamFactory.create();
+    final Team team2 = teamFactory.create();
 
-    final Team team2 = new Team();
-
-    team2.setName("test team 2");
-    teamService.save(team2);
-
-    mockMvc.perform(get("/teams"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(2)))
-            .andExpect(jsonPath("$[0].name").value("test team 1"))
-            .andExpect(jsonPath("$[1].name").value("test team 2"));
+    mockMvc
+        .perform(get("/teams"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(2)))
+        .andExpect(jsonPath("$[0].name").value(team1.getName()))
+        .andExpect(jsonPath("$[1].name").value(team2.getName()));
   }
 }
