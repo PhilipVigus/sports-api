@@ -29,7 +29,7 @@ class TeamFactoryTest {
   void setUp() {
     MockitoAnnotations.openMocks(this);
 
-    teamFactory = new TeamFactory(Team.class, teamService);
+    teamFactory = new TeamFactory(teamService);
   }
 
   @Test

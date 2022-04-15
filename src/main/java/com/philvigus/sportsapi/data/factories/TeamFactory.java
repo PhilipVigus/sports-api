@@ -9,8 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class TeamFactory extends AbstractBaseFactory<Team> {
-  public TeamFactory(final Class<Team> clazz, final EntitySaver<Team> entitySaver) {
-    super(clazz, entitySaver);
+  public TeamFactory(final EntitySaver<Team> entitySaver) {
+    super(Team.class, entitySaver);
   }
 
   @Override
