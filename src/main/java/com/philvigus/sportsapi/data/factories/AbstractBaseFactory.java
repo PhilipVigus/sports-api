@@ -4,8 +4,8 @@ import com.github.javafaker.Faker;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.apache.commons.beanutils.BeanUtils.setProperty;
 
@@ -16,29 +16,30 @@ public abstract class AbstractBaseFactory<T> {
 
   protected final JpaRepository<T, Long> repository;
 
+  protected Map<String, Object> customAttributes;
+
   public AbstractBaseFactory(final Class<T> clazz, JpaRepository<T, Long> repository) {
     faker = new Faker();
 
     this.clazz = clazz;
     this.repository = repository;
+    this.customAttributes = new ConcurrentHashMap<>();
   }
 
-  public T create(final Map<String, Object> customAttributes) {
-    final T entity = getEntityWithAttributesSet(customAttributes);
+  public T create() throws FactoryException {
+    final T entity = getEntityWithAttributesSet(this.customAttributes);
 
     return repository.save(entity);
   }
 
-  public T create() throws FactoryException {
-    return create(new HashMap<>());
-  }
-
-  public T make(final Map<String, Object> customAttributes) throws FactoryException {
-    return getEntityWithAttributesSet(customAttributes);
-  }
-
   public T make() throws FactoryException {
-    return make(new HashMap<>());
+    return getEntityWithAttributesSet(this.customAttributes);
+  }
+
+  public AbstractBaseFactory<T> setCustomAttributes(Map<String, Object> customAttributes) {
+    this.customAttributes = customAttributes;
+
+    return this;
   }
 
   protected T getEntityWithAttributesSet(final Map<String, Object> customAttributes)
