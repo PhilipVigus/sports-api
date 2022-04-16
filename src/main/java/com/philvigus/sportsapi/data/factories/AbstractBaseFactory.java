@@ -4,6 +4,8 @@ import com.github.javafaker.Faker;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,7 +20,7 @@ public abstract class AbstractBaseFactory<T> {
 
   protected Map<String, Object> customAttributes;
 
-  public AbstractBaseFactory(final Class<T> clazz, JpaRepository<T, Long> repository) {
+  public AbstractBaseFactory(final Class<T> clazz, final JpaRepository<T, Long> repository) {
     faker = new Faker();
 
     this.clazz = clazz;
@@ -26,17 +28,47 @@ public abstract class AbstractBaseFactory<T> {
     this.customAttributes = new ConcurrentHashMap<>();
   }
 
+  public List<T> create(final int copies) throws FactoryException {
+    if (copies < 1) {
+      throw new IllegalArgumentException("copies must be greater than 0");
+    }
+
+    final List<T> entities = new ArrayList<>(copies);
+
+    for (int i = 0; i < copies; i++) {
+      final T entity = getEntityWithAttributesSet(customAttributes);
+      entities.add(repository.save(entity));
+    }
+
+    return entities;
+  }
+
   public T create() throws FactoryException {
-    final T entity = getEntityWithAttributesSet(this.customAttributes);
+    final T entity = getEntityWithAttributesSet(customAttributes);
 
     return repository.save(entity);
   }
 
-  public T make() throws FactoryException {
-    return getEntityWithAttributesSet(this.customAttributes);
+  public List<T> make(final int copies) throws FactoryException {
+    if (copies < 1) {
+      throw new IllegalArgumentException("copies must be greater than 0");
+    }
+
+    final List<T> entities = new ArrayList<>(copies);
+
+    for (int i = 0; i < copies; i++) {
+      final T entity = getEntityWithAttributesSet(customAttributes);
+      entities.add(entity);
+    }
+
+    return entities;
   }
 
-  public AbstractBaseFactory<T> withAttributes(Map<String, Object> customAttributes) {
+  public T make() throws FactoryException {
+    return getEntityWithAttributesSet(customAttributes);
+  }
+
+  public AbstractBaseFactory<T> withAttributes(final Map<String, Object> customAttributes) {
     this.customAttributes = customAttributes;
 
     return this;

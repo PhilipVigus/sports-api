@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -31,14 +33,13 @@ class TeamsControllerIntegrationTest {
   void whenGetTeamsThenReturnsAllTeams() throws Exception {
     teamFactory = new TeamFactory(teamRepository);
 
-    final Team team1 = teamFactory.create();
-    final Team team2 = teamFactory.create();
+    List<Team> teams = teamFactory.create(2);
 
     mockMvc
         .perform(get("/teams"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0].name").value(team1.getName()))
-        .andExpect(jsonPath("$[1].name").value(team2.getName()));
+        .andExpect(jsonPath("$[0].name").value(teams.get(0).getName()))
+        .andExpect(jsonPath("$[1].name").value(teams.get(1).getName()));
   }
 }
