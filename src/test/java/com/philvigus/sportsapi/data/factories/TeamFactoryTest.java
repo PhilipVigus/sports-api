@@ -36,7 +36,7 @@ class TeamFactoryTest {
   void createSavesAndReturnsTheTeamWithTheSpecifiedName() throws FactoryException {
     String teamName = "test name";
 
-    teamFactory.setCustomAttributes(Map.of("name", teamName)).create();
+    teamFactory.withAttributes(Map.of("name", teamName)).create();
 
     verify(teamRepository, times(1)).save(teamCaptor.capture());
 
@@ -56,7 +56,7 @@ class TeamFactoryTest {
   void makeReturnsTheTeamWithTheSpecifiedName() throws FactoryException {
     String teamName = "test name";
 
-    Team team = teamFactory.setCustomAttributes(Map.of("name", teamName)).make();
+    Team team = teamFactory.withAttributes(Map.of("name", teamName)).make();
 
     assertEquals(teamName, team.getName());
   }

@@ -36,7 +36,7 @@ public abstract class AbstractBaseFactory<T> {
     return getEntityWithAttributesSet(this.customAttributes);
   }
 
-  public AbstractBaseFactory<T> setCustomAttributes(Map<String, Object> customAttributes) {
+  public AbstractBaseFactory<T> withAttributes(Map<String, Object> customAttributes) {
     this.customAttributes = customAttributes;
 
     return this;
