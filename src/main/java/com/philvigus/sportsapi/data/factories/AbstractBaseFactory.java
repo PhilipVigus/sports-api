@@ -1,6 +1,6 @@
 package com.philvigus.sportsapi.data.factories;
 
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.lang.reflect.InvocationTargetException;
