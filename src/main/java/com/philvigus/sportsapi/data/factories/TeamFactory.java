@@ -1,7 +1,7 @@
 package com.philvigus.sportsapi.data.factories;
 
 import com.philvigus.sportsapi.data.domain.Team;
-import com.philvigus.sportsapi.data.services.EntitySaver;
+import com.philvigus.sportsapi.data.repositories.TeamRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -9,8 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class TeamFactory extends AbstractBaseFactory<Team> {
-  public TeamFactory(final EntitySaver<Team> entitySaver) {
-    super(Team.class, entitySaver);
+
+  public TeamFactory(final TeamRepository repository) {
+    super(Team.class, repository);
   }
 
   @Override

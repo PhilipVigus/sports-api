@@ -1,7 +1,7 @@
 package com.philvigus.sportsapi.data.factories;
 
 import com.github.javafaker.Faker;
-import com.philvigus.sportsapi.data.services.EntitySaver;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -14,19 +14,19 @@ public abstract class AbstractBaseFactory<T> {
 
   protected final Class<T> clazz;
 
-  protected final EntitySaver<T> entitySaver;
+  protected final JpaRepository<T, Long> repository;
 
-  public AbstractBaseFactory(final Class<T> clazz, final EntitySaver<T> entitySaver) {
+  public AbstractBaseFactory(final Class<T> clazz, JpaRepository<T, Long> repository) {
     faker = new Faker();
 
     this.clazz = clazz;
-    this.entitySaver = entitySaver;
+    this.repository = repository;
   }
 
   public T create(final Map<String, Object> customAttributes) {
     final T entity = getEntityWithAttributesSet(customAttributes);
 
-    return entitySaver.save(entity);
+    return repository.save(entity);
   }
 
   public T create() throws FactoryException {

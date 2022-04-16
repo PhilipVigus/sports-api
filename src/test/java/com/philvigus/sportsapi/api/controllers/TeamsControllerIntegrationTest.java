@@ -2,7 +2,7 @@ package com.philvigus.sportsapi.api.controllers;
 
 import com.philvigus.sportsapi.data.domain.Team;
 import com.philvigus.sportsapi.data.factories.TeamFactory;
-import com.philvigus.sportsapi.data.services.TeamService;
+import com.philvigus.sportsapi.data.repositories.TeamRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class TeamsControllerIntegrationTest {
   TeamFactory teamFactory;
 
-  @Autowired TeamService teamService;
+  @Autowired TeamRepository teamRepository;
 
   @Autowired MockMvc mockMvc;
 
   @Test
   @DisplayName("When the GET /teams is hit it returns all teams")
   void whenGetTeamsThenReturnsAllTeams() throws Exception {
-    teamFactory = new TeamFactory(teamService);
+    teamFactory = new TeamFactory(teamRepository);
 
     final Team team1 = teamFactory.create();
     final Team team2 = teamFactory.create();

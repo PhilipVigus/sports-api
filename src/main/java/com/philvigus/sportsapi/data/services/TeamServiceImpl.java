@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TeamServiceImpl implements  TeamService{
+public class TeamServiceImpl implements TeamService {
   private final TeamRepository teamRepository;
 
   public TeamServiceImpl(final TeamRepository teamRepository) {
@@ -15,7 +15,7 @@ public class TeamServiceImpl implements  TeamService{
   }
 
   @Override
-  public Team save(final Team team) {
+  public Team save(Team team) {
     return teamRepository.save(team);
   }
 
@@ -24,4 +24,3 @@ public class TeamServiceImpl implements  TeamService{
     return teamRepository.findAll();
   }
 }
-

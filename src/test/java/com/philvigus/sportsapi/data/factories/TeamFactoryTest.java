@@ -1,7 +1,7 @@
 package com.philvigus.sportsapi.data.factories;
 
 import com.philvigus.sportsapi.data.domain.Team;
-import com.philvigus.sportsapi.data.services.TeamService;
+import com.philvigus.sportsapi.data.repositories.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 class TeamFactoryTest {
   TeamFactory teamFactory;
 
-  @Mock TeamService teamService;
+  @Mock TeamRepository teamRepository;
 
   @Captor ArgumentCaptor<Team> teamCaptor;
 
@@ -29,7 +29,7 @@ class TeamFactoryTest {
   void setUp() {
     MockitoAnnotations.openMocks(this);
 
-    teamFactory = new TeamFactory(teamService);
+    teamFactory = new TeamFactory(teamRepository);
   }
 
   @Test
@@ -38,7 +38,7 @@ class TeamFactoryTest {
 
     teamFactory.create(Map.of("name", teamName));
 
-    verify(teamService, times(1)).save(teamCaptor.capture());
+    verify(teamRepository, times(1)).save(teamCaptor.capture());
 
     assertEquals(teamName, teamCaptor.getValue().getName());
   }
@@ -47,7 +47,7 @@ class TeamFactoryTest {
   void createSavesAndReturnsTheTeamWithARandomNameIfNoneIsSpecified() throws FactoryException {
     teamFactory.create();
 
-    verify(teamService, times(1)).save(teamCaptor.capture());
+    verify(teamRepository, times(1)).save(teamCaptor.capture());
 
     assertNotEquals("", teamCaptor.getValue().getName());
   }
