@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TeamServiceImpl implements  TeamService{
+public class TeamServiceImpl implements TeamService {
   private final TeamRepository teamRepository;
 
   public TeamServiceImpl(final TeamRepository teamRepository) {
@@ -24,4 +24,3 @@ public class TeamServiceImpl implements  TeamService{
     return teamRepository.findAll();
   }
 }
-
